@@ -5,9 +5,12 @@
   tasks:
 
   - name: update apt repositories
-    apt:
+    dnf:
       update_cache: true
 
   - name: install docker packages
-    apt:
-      name: docker.io, docker-compose
+    dnf:
+      name:
+        - docker.io
+        - docker-compose
+
