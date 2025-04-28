@@ -7,14 +7,14 @@
   - name: dnf update repositories
     dnf:
       update_cache: true
-    when: ansible_distribution == "RHEL"
+    when: ansible_distribution == "RedHat"
 
   - name: dnf install docker packages
     dnf:
       name:
         - docker.io
         - docker-compose
-    when: ansible_distribution == "RHEL"
+    when: ansible_distribution == "RedHat"
 
   - name: apt update repositories
     apt:
