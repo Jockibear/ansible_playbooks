@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: Docker hosts
   become: true
   tasks:
 
@@ -8,10 +8,10 @@
     dnf:
       name:
         - podman-docker
-      update_cache: true
+      update_cache: true 
     when: ansible_distribution == "RedHat"
 
-  - name: apt install docker packages
+  - name: apt update repositories and install docker packages
     apt:
       name:
         - docker.io
@@ -20,4 +20,5 @@
         - docker-buildx-plugin
         - docker-compose-plugin
       update_cache: true
+      state: latest
     when: ansible_distribution in ["Ubuntu", "Debian"]
