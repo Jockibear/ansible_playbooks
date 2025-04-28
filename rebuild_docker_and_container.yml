@@ -4,21 +4,12 @@
   become: true
   tasks:
 
-  - name: dnf update repositories
-    dnf:
-      update_cache: true
-    when: ansible_distribution == "RedHat"
-
-  - name: dnf install docker packages
+  - name: dnf update repositories and install docker packages
     dnf:
       name:
         - podman-docker
-    when: ansible_distribution == "RedHat"
-
-  - name: apt update repositories
-    apt:
       update_cache: true
-    when: ansible_distribution == "Ubuntu"
+    when: ansible_distribution == "RedHat"
 
   - name: apt install docker packages
     apt:
@@ -28,4 +19,5 @@
         - containerd.io
         - docker-buildx-plugin
         - docker-compose-plugin
-    when: ansible_distribution == "Ubuntu"
+      update_cache: true
+    when: ansible_distribution in ["Ubuntu", "Debian"]
