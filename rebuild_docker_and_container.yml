@@ -5,6 +5,7 @@
   tasks:
 
   - name: dnf update repositories and install docker packages
+    tags: docker, dnf, podman, RedHat
     dnf:
       name:
         - podman-docker
@@ -12,6 +13,7 @@
     when: ansible_distribution == "RedHat"
 
   - name: apt update repositories and install docker packages
+    tags: docker, apt, containerd, ubuntu
     apt:
       name:
         - docker.io
