@@ -12,11 +12,7 @@
   - name: dnf install docker packages
     dnf:
       name:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
-        - docker-buildx-plugin
-        - docker-compose-plugin
+        - podman-docker
     when: ansible_distribution == "RedHat"
 
   - name: apt update repositories
@@ -27,7 +23,7 @@
   - name: apt install docker packages
     apt:
       name:
-        - docker-ce
+        - docker.io
         - docker-ce-cli
         - containerd.io
         - docker-buildx-plugin
