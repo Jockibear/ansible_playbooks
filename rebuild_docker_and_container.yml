@@ -4,13 +4,26 @@
   become: true
   tasks:
 
-  - name: update apt repositories
+  - name: dnf update repositories
     dnf:
       update_cache: true
+    when: ansible_distribution == "RHEL"
 
-  - name: install docker packages
+  - name: dnf install docker packages
     dnf:
       name:
         - docker.io
         - docker-compose
+    when: ansible_distribution == "RHEL"
 
+  - name: apt update repositories
+    apt:
+      update_cache: true
+    when: ansible_distribution == "Ubuntu"
+
+  - name: apt install docker packages
+    apt:
+      name:
+        - docker.io
+        - docker-compose
+    when: ansible_distribution == "Ubuntu"
