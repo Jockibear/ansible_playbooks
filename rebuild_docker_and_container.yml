@@ -18,6 +18,8 @@
       name:
         - docker.io
         - docker-compose
+        - cifs-utils
+        - keyutils
       update_cache: true
       state: latest
     when: ansible_distribution in ["Ubuntu", "Debian"]
@@ -36,6 +38,8 @@
       - /home/janik/docker-compose/paperless-ngx/
       - /home/janik/docker-compose/uptime-kuma/
       - /home/janik/docker-compose/vaultwarden/
+
+  - name: mount storage-box
 
   tasks:
   
