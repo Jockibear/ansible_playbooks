@@ -5,5 +5,6 @@
   tasks: 
 
   - name: install apache2 package
-    dnf:
+    apt:
       name: apache2
+      state: latest
