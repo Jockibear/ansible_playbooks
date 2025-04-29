@@ -1,8 +1,8 @@
 ---
 
-- hosts: Docker hosts
+- hosts: docker_hosts
   become: true
-  tasks:
+  pre-tasks:
 
   - name: dnf update repositories and install docker packages
     tags: docker, dnf, podman, RedHat
@@ -24,3 +24,30 @@
       update_cache: true
       state: latest
     when: ansible_distribution in ["Ubuntu", "Debian"]
+  
+  tasks:
+  
+  - name: copy docker-compose files from storagebox
+    tags: docker-compose, yaml, storagebox
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    loop:
+      - src: /mnt/storage-box/docker-compose/nginx-pm/docker-compose.yml
+        dest: ~/docker-compose/nginx-pm/docker-compose.yml
+      - src: /mnt/storage-box/docker-compose/authentik/docker-compose.yml
+        dest: ~/docker-compose/authentik/docker-compose.yml
+      - src: /mnt/storage-box/docker-compose/bookstack/docker-compose.yml
+        dest: ~/docker-compose/bookstack/docker-compose.yml
+      - src: /mnt/storage-box/docker-compose/kitchenowl/docker-compose.yml
+        dest: ~/docker-compose/kitchenowl/docker-compose.yml
+      - src: /mnt/storage-box/docker-compose/paperless-ngx/docker-compose.yml
+        dest: ~/docker-compose/paperless-ngx/docker-compose.yml
+      - src: /mnt/storage-box/docker-compose/uptime-kuma/compose.yaml
+        dest: ~/docker-compose/uptime-kuma/docker-compose.yml
+      - src: /mnt/storage-box/docker-compose/vaultwarden/docker-compose.yml
+        dest: ~/docker-compose/vaultwarden/docker-compose.yml
+
+  - name: run docker-compose on nginx-pm
+    docker_compose:
+      project_src: "{{ item.dest }}"
