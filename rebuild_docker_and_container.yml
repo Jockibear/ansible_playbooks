@@ -17,19 +17,32 @@
     apt:
       name:
         - docker.io
-        - docker-ce-cli
-        - containerd.io
-        - docker-buildx-plugin
-        - docker-compose-plugin
+        - docker-compose
       update_cache: true
       state: latest
     when: ansible_distribution in ["Ubuntu", "Debian"]
   
+  - name: create compose folder structure
+    ansible.builtin.file:
+      path: "{{ item }}"
+      state: directory
+      mode: '0755'
+    loop:
+      - /home/janik/docker-compose/
+      - /home/janik/docker-compose/authentik/
+      - /home/janik/docker-compose/bookstack/
+      - /home/janik/docker-compose/kitchenowl/
+      - /home/janik/docker-compose/nginx-pm/
+      - /home/janik/docker-compose/paperless-ngx/
+      - /home/janik/docker-compose/uptime-kuma/
+      - /home/janik/docker-compose/vaultwarden/
+
   tasks:
   
   - name: copy docker-compose files from storagebox
     tags: docker-compose, yaml, storagebox
     copy:
+      remote_src: true
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
     loop:
