@@ -39,8 +39,6 @@
       - /home/janik/docker-compose/uptime-kuma/
       - /home/janik/docker-compose/vaultwarden/
 
-  - name: mount storage-box
-
   tasks:
   
   - name: copy docker-compose files from storagebox
