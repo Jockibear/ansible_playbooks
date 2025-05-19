@@ -64,7 +64,7 @@
         dest: /home/janik/docker-compose/vaultwarden/docker-compose.yml
 
   - name: run docker-compose on compose files
-    docker_compose:
+    community.docker.docker_compose_v2:
       project_src: "{{ item }}"
       pull: "always"
     loop:
